@@ -1,5 +1,7 @@
 # Sunny.Clouds
 
+> cloud-native, distributed, high-avaible/concurrent/resilient
+
 ## Create local kubernetes cluster
 
 ### single node cluster with rancher
