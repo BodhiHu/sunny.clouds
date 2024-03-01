@@ -1,0 +1,46 @@
+#
+# docker build -t ubuntu-20-04 Dockerfile-ubuntu_20_04
+#
+# docker run -d --restart=unless-stopped \
+#   --network host
+#   #-p 80:80 -p 443:443 \
+#   --privileged \
+#   --name ubuntu-20_04 \
+#   #--cpus="1.0" --memory="4g" --memory-swap="4g" \
+#   #--volume "../:/sunny-clouds"
+#   ubuntu-20-04
+#
+
+FROM ubuntu:20.04 
+ 
+WORKDIR /app
+ 
+RUN printf "\
+# tencent mirrors\
+deb http://mirrors.cloud.tencent.com/ubuntu/ focal main restricted universe multiverse\
+deb http://mirrors.cloud.tencent.com/ubuntu/ focal-updates main restricted universe multiverse\
+deb http://mirrors.cloud.tencent.com/ubuntu/ focal-backports main restricted universe multiverse\
+deb http://mirrors.cloud.tencent.com/ubuntu/ focal-security main restricted universe multiverse\
+\
+deb https://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial main\
+deb https://mirrors.tuna.tsinghua.edu.cn/kubernetes/apt/ kubernetes-xenial main\
+\
+$(cat /etc/apt/sources.list)\
+" > /etc/apt/sources.list
+
+RUN apt-get update
+RUN apt-get install -y vim-tiny net-tools iputils-ping curl bash-completion
+
+# Install Docker CE
+RUN apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+
+RUN chsh -s /bin/bash
+RUN printf "\
+$(cat ~/.bashrc)\
+\n\
+\n\
+export PS1=\"🌻\[\033[01;32m\] \W\[\033[00m\] \"\
+\n\
+" > ~/.bashrc
+
+CMD tail -f /dev/null

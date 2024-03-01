@@ -1,0 +1,53 @@
+BOX_NAME = "generic/ubuntu2204"
+N = 2
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 2048
+    v.cpus = 2
+
+    # Fix VM DNS not working:
+    #   see https://serverfault.com/a/453260
+    #
+    # Option1: Enabling DNS proxy in NAT mode
+    #   VBoxManage modifyvm "VM name" --natdnsproxy1 on
+    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    # Option2: Using the host's resolver as a DNS proxy in NAT mode
+    #   VBoxManage modifyvm "VM name" --natdnshostresolver1 on
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+
+  end
+
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+  config.ssh.insert_key = "true"
+
+  (1..N).each do |i|
+    config.vm.define "node-#{i}" do |node|
+      node.vm.box = BOX_NAME
+      node.vm.network "private_network", ip: "192.168.20.1#{i}"
+      node.vm.hostname = "ksp-node-#{i}"
+
+      # Install docker
+      node.vm.provision "shell",
+        path: "docker-20.10-install.sh"
+
+      # The SSH user used for node access must be a member of the docker group on the node
+      # NOTE: needs reload
+      node.vm.provision "shell",
+        inline: "usermod -aG docker vagrant"
+
+      # Setup docker CN mirrors
+      # NOTE: needs reload
+      node.vm.provision "shell",
+        path: "docker-registry-mirrors.sh"
+
+      # Install KubeKey required dependencies
+      # see https://kubesphere.io/docs/v3.3/installing-on-linux/introduction/multioverview/#dependency-requirements
+      node.vm.provision "shell",
+        path: "install-kk-deps.sh"
+    end
+  end
+
+end

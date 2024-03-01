@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  single-node-cluster:
+    container_name: rancher-kube-single-node-cluster
+    image: rancher/rancher:v2.7.1
+    # image: rancher/rancher:v2.6.10
+    restart: "unless-stopped"
+    # NOTE: using network_mode will make server unaccessible from Mac
+    # network_mode: host
+    ports:
+      - 80:80
+      - 443:443
+    privileged: true
+    # environment:
+    #   - CATTLE_AGENT_IMAGE="registry.cn-hangzhou.aliyuncs.com/rancher/rancher-agent:v2.7.1"
+    volumes:
+      - ../..:/sunny-clouds

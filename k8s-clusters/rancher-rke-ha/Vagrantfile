@@ -1,0 +1,55 @@
+BOX_NAME = "generic/ubuntu2204"
+N = 3
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 1
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  end
+
+  # NOTE: for root ssh logins:
+  #  1. Change root passwd
+  #     $ sudo passwd root
+  #  2. Edit `/etc/ssh/sshd_config`` and ensure:
+  #     PermitRootLogin yes
+  # config.ssh.username = "root"
+  # config.ssh.password = "root"
+  # config.ssh.insert_key = "true"
+
+  (1..N).each do |i|
+    config.vm.define "node-#{i}" do |node|
+      node.vm.box = BOX_NAME
+      node.vm.network "private_network", ip: "192.168.50.1#{i}"
+      node.vm.hostname = "node-#{i}"
+
+      # Install docker
+      # node.vm.provision "shell",
+      #   path: "docker-20.10-install.sh"
+
+      # The SSH user used for node access must be a member of the docker group on the node
+      # NOTE: needs reload
+      # node.vm.provision "shell",
+      #   inline: "usermod -aG docker vagrant"
+
+      # Setup docker CN mirrors
+      # NOTE: needs reload
+      # node.vm.provision "shell",
+      #   path: "docker-registry-mirrors.sh"
+
+      # Restart docker services
+      # node.vm.provision "shell",
+      #   inline: "sudo systemctl restart docker"
+
+      # ansible is not available for Windows
+      # node.vm.provision "ansible" do |ansible|
+      #   ansible.playbook = "node-playbook.yml"
+      #   ansible.extra_vars = {
+      #     node_ip: "192.168.50.1#{i}",
+      #   }
+      # end
+    end
+  end
+
+end

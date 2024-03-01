@@ -1,0 +1,42 @@
+[submodule "rancher"]
+	path = rancher
+	url = git@github.com:rancher/rancher.git
+[submodule "dapr"]
+	path = dapr
+	url = git@github.com:BodhiHu/dapr.git
+	branch = v1.9.4
+[submodule "dapr-quickstarts"]
+	path = dapr-quickstarts
+	url = git@github.com:dapr/quickstarts.git
+[submodule "kubernetes"]
+	path = kubernetes
+	url = git@github.com:kubernetes/kubernetes.git
+[submodule "dapr-sdk-java"]
+	path = dapr-sdk-java
+	url = https://github.com/BodhiHu/java-sdk.git
+[submodule "dapr-sdk-go"]
+	path = dapr-sdk-go
+	url = https://github.com/dapr/go-sdk.git
+[submodule "dapr-sdk-python"]
+	path = dapr-sdk-python
+	url = https://github.com/dapr/python-sdk.git
+[submodule "dapr-sdk-cpp"]
+	path = dapr-sdk-cpp
+	url = https://github.com/dapr/cpp-sdk.git
+[submodule "dapr-components-contrib"]
+	path = dapr-components-contrib
+	url = https://github.com/dapr/components-contrib.git
+[submodule "istio"]
+	path = istio
+	url = git@github.com:istio/istio.git
+  branch = release-1.14
+[submodule "rancher-dashboard"]
+	path = rancher-dashboard
+	url = https://github.com/bodhitreestudio/dashboard.git
+	branch = release-2.7.1
+[submodule "charts"]
+	path = charts
+	url = https://github.com/bitnami/charts.git
+[submodule "dapr-samples"]
+	path = dapr-samples
+	url = git@github.com:dapr/samples.git

@@ -1,0 +1,17 @@
+---
+- name: Setup node
+  hosts: all
+
+  tasks:
+  - name: Install docker and its dependecies
+    ansible.builtin.sh: 
+      cmd: curl https://releases.rancher.com/install-docker/20.10.sh | sh
+  - name: Add vagrant user to docker group
+    user:
+      name: vagrant
+      group: docker
+
+  - name: Ensure that docker is started
+    ansible.builtin.service:
+      name: docker
+      state: started

@@ -1,0 +1,5 @@
+logs/
+.bin/
+*.rkestate
+**/.vagrant
+.DS_Store

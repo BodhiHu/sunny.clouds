@@ -1,0 +1,27 @@
+# References:
+# https://rancher.com/docs/rke/latest/en/installation/#prepare-the-nodes-for-the-kubernetes-cluster
+# https://rancher.com/docs/rke/latest/en/example-yamls
+cluster_name: rke_cluster
+kubernetes_version: v1.22.15-rancher1-1
+nodes:
+  - address: 192.168.50.11
+    role:
+      - controlplane
+      - etcd
+      - worker
+    user: vagrant
+    ssh_key_path: .vagrant/machines/node-1/virtualbox/private_key
+  - address: 192.168.50.12
+    role:
+      - controlplane
+      - etcd
+      - worker
+    user: vagrant
+    ssh_key_path: .vagrant/machines/node-2/virtualbox/private_key
+  - address: 192.168.50.13
+    role:
+      - controlplane
+      - etcd
+      - worker
+    user: vagrant
+    ssh_key_path: .vagrant/machines/node-3/virtualbox/private_key

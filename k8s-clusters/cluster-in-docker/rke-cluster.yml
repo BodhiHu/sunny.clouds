@@ -1,0 +1,20 @@
+# References:
+# https://rancher.com/docs/rke/latest/en/installation/#prepare-the-nodes-for-the-kubernetes-cluster
+# https://rancher.com/docs/rke/latest/en/example-yamls
+cluster_name: rke_cluster
+kubernetes_version: v1.22.15-rancher1-1
+nodes:
+  - address: 10.21.108.10
+    user: root
+    role:
+      - controlplane
+      - etcd
+      - worker
+  - address: 10.21.108.11
+    user: root
+    role:
+      - worker
+  - address: 10.21.108.12
+    user: root
+    role:
+      - worker

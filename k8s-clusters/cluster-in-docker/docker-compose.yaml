@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  ubuntu-20_04-0:
+    container_name: ubuntu-20.04-0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "unless-stopped"
+    volumes:
+      - ..:/app/clouds-native
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      default:
+        ipv4_address: 10.21.108.10
+    # command: /bin/bash -c "tail -f /dev/null"
+  ubuntu-20_04-1:
+    container_name: ubuntu-20.04-1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "unless-stopped"
+    volumes:
+      - ..:/app/clouds-native
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      default:
+        ipv4_address: 10.21.108.11
+  ubuntu-20_04-2:
+    container_name: ubuntu-20.04-2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "unless-stopped"
+    volumes:
+      - ..:/app/clouds-native
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      default:
+        ipv4_address: 10.21.108.12
+    # command: /bin/bash -c "tail -f /dev/null"
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.21.108.0/24"
